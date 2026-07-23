@@ -91,39 +91,17 @@ body {
   pointer-events: none;
 }
 
-/* ---------- Envelope doodle ---------- */
+/* ---------- Running horse doodle ---------- */
 
 .doodle-wrap {
-  animation: float 3s ease-in-out infinite alternate;
+  display: flex;
+  justify-content: center;
 }
 
 .doodle {
-  width: 130px;
+  width: 150px;
   height: auto;
-  overflow: visible;
-}
-
-.doodle-envelope {
-  fill: var(--paper-alt);
-  stroke: var(--ink);
-  stroke-width: 3;
-}
-
-.doodle-flap {
-  fill: none;
-  stroke: var(--ink);
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.doodle-seal path {
-  fill: var(--accent);
-}
-
-@keyframes float {
-  0% { transform: translateY(0) rotate(-2deg); }
-  100% { transform: translateY(-10px) rotate(2deg); }
+  filter: drop-shadow(2px 6px 6px rgba(74, 54, 40, 0.25));
 }
 
 /* ---------- Dialogue box ---------- */
