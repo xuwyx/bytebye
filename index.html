@@ -6,51 +6,31 @@
   <title>bytebye</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <div class="crt"></div>
+  <div class="paper-grain"></div>
 
   <button class="lang-toggle" id="langToggle" type="button" data-sound disabled aria-label="Switch language">EN</button>
 
   <main class="stage">
 
-    <!-- Pixel sprite -->
-    <div class="sprite-wrap">
-      <svg class="sprite" viewBox="0 0 14 14" shape-rendering="crispEdges" aria-hidden="true">
-        <!-- hair -->
-        <rect x="4" y="1" width="6" height="2" class="px-hair"/>
-        <!-- face -->
-        <rect x="4" y="3" width="6" height="4" class="px-skin"/>
-        <rect x="5" y="4" width="1" height="1" class="px-ink"/>
-        <rect x="8" y="4" width="1" height="1" class="px-ink"/>
-        <rect x="6" y="6" width="2" height="1" class="px-ink"/>
-        <!-- body -->
-        <rect x="3" y="7" width="8" height="5" class="px-blue"/>
-        <!-- left arm -->
-        <rect x="2" y="8" width="1" height="4" class="px-skin"/>
-        <!-- legs -->
-        <rect x="4" y="12" width="3" height="2" class="px-pants"/>
-        <rect x="7" y="12" width="3" height="2" class="px-pants"/>
-        <!-- waving arm: frame A (down) -->
-        <g class="arm-frame arm-a">
-          <rect x="11" y="8" width="1" height="4" class="px-skin"/>
-        </g>
-        <!-- waving arm: frame B (up) -->
-        <g class="arm-frame arm-b">
-          <rect x="11" y="5" width="1" height="3" class="px-skin"/>
-          <rect x="12" y="3" width="1" height="2" class="px-skin"/>
-          <rect x="13" y="2" width="1" height="1" class="px-white"/>
-          <rect x="13" y="4" width="1" height="1" class="px-white"/>
+    <!-- Hand-drawn envelope doodle -->
+    <div class="doodle-wrap">
+      <svg class="doodle" viewBox="0 0 140 100" aria-hidden="true">
+        <rect x="10" y="15" width="120" height="75" rx="6" class="doodle-envelope" />
+        <path d="M10 15 L70 55 L130 15" class="doodle-flap" />
+        <g class="doodle-seal" transform="translate(60,40)">
+          <path d="M10 4 C10 1.5 12.5 0 15 0 C17 0 18.5 1 20 3 C21.5 1 23 0 25 0 C27.5 0 30 1.5 30 4 C30 8 24 12.5 20 16.5 C16 12.5 10 8 10 4 Z" />
         </g>
       </svg>
     </div>
 
-    <!-- RPG-style dialogue box -->
+    <!-- Letter dialogue box -->
     <div class="dialogue-box" id="dialogueBox">
-      <p id="dialogueText"></p><span class="cursor">&#9608;</span>
+      <p id="dialogueText"></p><span class="cursor">|</span>
     </div>
 
     <!-- Music choice -->

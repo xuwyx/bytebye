@@ -5,50 +5,39 @@
 }
 
 :root {
-  --c-bg: #0c0c14;
-  --c-white: #fcfcfc;
-  --c-red: #e4002b;
-  --c-blue: #0058f8;
-  --c-yellow: #f8d800;
-  --c-skin: #f8d8a8;
-  --c-hair: #5a3825;
-  --c-pants: #585858;
-  --c-ink: #0c0c14;
+  --paper: #f6ecd8;
+  --paper-alt: #efe1bd;
+  --paper-line: #d8c69a;
+  --ink: #4a3628;
+  --ink-soft: #7a6249;
+  --accent: #b5533c;
+  --note-yellow: #ffdf8a;
+  --note-pink: #f7b6c2;
+  --note-blue: #a9d3e0;
+  --note-green: #bcd9a0;
 }
 
 body {
   min-height: 100vh;
-  font-family: "VT323", monospace;
-  background: var(--c-bg);
-  color: var(--c-white);
+  font-family: "Caveat", "Ma Shan Zheng", cursive;
+  background: var(--paper);
+  color: var(--ink);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow-x: hidden;
-  image-rendering: pixelated;
 }
 
-/* ---------- CRT scanline overlay ---------- */
+/* ---------- Paper grain overlay ---------- */
 
-.crt {
+.paper-grain {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 50;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.25) 0px,
-    rgba(0, 0, 0, 0.25) 1px,
-    transparent 1px,
-    transparent 3px
-  );
-}
-
-.crt::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.55) 100%);
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .stage {
@@ -62,28 +51,38 @@ body {
   padding: 24px;
   text-align: center;
   position: relative;
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+.stage.fold-away {
+  transform: scale(0.15) rotate(18deg) translateY(140px);
+  opacity: 0;
 }
 
 /* ---------- Language toggle ---------- */
 
 .lang-toggle {
   position: fixed;
-  top: 14px;
-  right: 14px;
+  top: 16px;
+  right: 16px;
   z-index: 55;
-  background: var(--c-bg);
-  color: var(--c-white);
-  border: 3px solid var(--c-white);
-  box-shadow: 0 0 0 3px var(--c-bg);
-  font-family: "Press Start 2P", monospace;
-  font-size: 0.7rem;
-  padding: 8px 10px;
+  background: var(--accent);
+  color: var(--paper);
+  border: 2px dashed var(--paper);
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  box-shadow: 2px 3px 6px rgba(74, 54, 40, 0.25);
+  font-family: "Caveat", cursive;
+  font-size: 1rem;
+  font-weight: 700;
   cursor: pointer;
+  transform: rotate(-6deg);
+  transition: transform 0.2s ease;
 }
 
 .lang-toggle:hover {
-  background: var(--c-white);
-  color: var(--c-bg);
+  transform: rotate(0deg) scale(1.05);
 }
 
 .lang-toggle:disabled {
@@ -92,64 +91,59 @@ body {
   pointer-events: none;
 }
 
-/* ---------- Pixel sprite ---------- */
+/* ---------- Envelope doodle ---------- */
 
-.sprite-wrap {
-  animation: bounce 0.6s steps(2) infinite;
+.doodle-wrap {
+  animation: float 3s ease-in-out infinite alternate;
 }
 
-.sprite {
-  width: 140px;
-  height: 140px;
-  shape-rendering: crispEdges;
+.doodle {
+  width: 130px;
+  height: auto;
+  overflow: visible;
 }
 
-.px-hair { fill: var(--c-hair); }
-.px-skin { fill: var(--c-skin); }
-.px-blue { fill: var(--c-blue); }
-.px-pants { fill: var(--c-pants); }
-.px-ink { fill: var(--c-ink); }
-.px-white { fill: var(--c-white); }
-
-@keyframes bounce {
-  0%, 49% { transform: translateY(0); }
-  50%, 100% { transform: translateY(-4px); }
+.doodle-envelope {
+  fill: var(--paper-alt);
+  stroke: var(--ink);
+  stroke-width: 3;
 }
 
-.arm-frame.arm-a {
-  animation: frameA 0.6s steps(1) infinite;
+.doodle-flap {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.arm-frame.arm-b {
-  animation: frameB 0.6s steps(1) infinite;
+.doodle-seal path {
+  fill: var(--accent);
 }
 
-@keyframes frameA {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
-
-@keyframes frameB {
-  0%, 49% { opacity: 0; }
-  50%, 100% { opacity: 1; }
+@keyframes float {
+  0% { transform: translateY(0) rotate(-2deg); }
+  100% { transform: translateY(-10px) rotate(2deg); }
 }
 
 /* ---------- Dialogue box ---------- */
 
 .dialogue-box {
-  margin-top: 28px;
+  margin-top: 24px;
   width: 100%;
   min-height: 76px;
-  background: var(--c-bg);
-  border: 4px solid var(--c-white);
-  box-shadow: 0 0 0 4px var(--c-bg), 0 0 0 8px var(--c-white);
-  padding: 16px 20px;
-  font-size: 1.4rem;
+  background: var(--paper-alt);
+  border: 2px solid var(--paper-line);
+  border-radius: 4px 8px 5px 9px;
+  box-shadow: 2px 4px 10px rgba(74, 54, 40, 0.15);
+  padding: 18px 22px;
+  font-size: 1.7rem;
   line-height: 1.4;
   text-align: left;
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
+  transform: rotate(-0.6deg);
 }
 
 #dialogueText {
@@ -158,8 +152,10 @@ body {
 }
 
 .cursor {
-  animation: blink 0.6s steps(1) infinite;
+  animation: blink 0.8s steps(1) infinite;
   margin-left: 2px;
+  font-weight: 700;
+  color: var(--accent);
 }
 
 @keyframes blink {
@@ -170,26 +166,29 @@ body {
 /* ---------- Menu ---------- */
 
 .menu {
-  margin-top: 28px;
+  margin-top: 26px;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   opacity: 0;
+  visibility: hidden;
   transform: translateY(12px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s linear 0.4s;
   pointer-events: none;
 }
 
 .menu.show {
   opacity: 1;
+  visibility: visible;
   transform: translateY(0);
   pointer-events: auto;
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s linear 0s;
 }
 
 .choice-row {
   display: flex;
-  gap: 14px;
+  gap: 16px;
 }
 
 .choice-row .menu-item {
@@ -197,99 +196,55 @@ body {
   justify-content: center;
 }
 
-/* ---------- Explosion ---------- */
-
-.explode-flash {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  background: white;
-  pointer-events: none;
-  animation: expl-flash 0.35s steps(3) forwards;
-}
-
-@keyframes expl-flash {
-  0%   { background: #fcfcfc; }
-  33%  { background: #e4002b; }
-  66%  { background: #f8d800; }
-  100% { background: transparent; }
-}
-
-.explode-px {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  image-rendering: pixelated;
-  pointer-events: none;
-  z-index: 199;
-  animation: expl-px 0.7s steps(7) forwards;
-}
-
-@keyframes expl-px {
-  from {
-    transform: translate(-50%, -50%) rotate(var(--a)) translateX(0px);
-    opacity: 1;
-  }
-  80% { opacity: 1; }
-  to {
-    transform: translate(-50%, -50%) rotate(var(--a)) translateX(var(--d));
-    opacity: 0;
-  }
-}
-
-.explode-dark {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  z-index: 300;
-}
-
 .menu-title {
-  font-family: "Press Start 2P", monospace;
-  font-size: 0.85rem;
-  letter-spacing: 1px;
-  margin-bottom: 4px;
-  color: var(--c-yellow);
+  font-family: "Caveat", "Ma Shan Zheng", cursive;
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  color: var(--accent);
+  border-bottom: 2px dashed var(--paper-line);
+  display: inline-block;
+  padding-bottom: 4px;
 }
+
+/* ---------- Sticky-note menu items ---------- */
 
 .menu-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 8px;
   width: 100%;
-  background: var(--c-bg);
-  color: var(--c-white);
-  border: 4px solid var(--c-white);
-  box-shadow: 0 0 0 4px var(--c-bg), 0 0 0 8px var(--c-white);
+  background: var(--note-yellow);
+  color: var(--ink);
+  border: none;
+  border-radius: 3px;
+  box-shadow: 2px 3px 8px rgba(74, 54, 40, 0.2);
   padding: 14px 18px;
-  font-family: "Press Start 2P", monospace;
-  font-size: 0.8rem;
+  font-family: "Caveat", "Ma Shan Zheng", cursive;
+  font-weight: 600;
+  font-size: 1.4rem;
   text-decoration: none;
   cursor: pointer;
-  text-align: left;
+  text-align: center;
+  transform: rotate(-1.5deg);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
+
+.menu-item:nth-of-type(4n+2) { background: var(--note-pink); transform: rotate(1.2deg); }
+.menu-item:nth-of-type(4n+3) { background: var(--note-blue); transform: rotate(-0.8deg); }
+.menu-item:nth-of-type(4n+4) { background: var(--note-green); transform: rotate(1.6deg); }
 
 .menu-item .arrow {
-  visibility: hidden;
-  color: var(--c-yellow);
-  animation: blink 0.6s steps(1) infinite;
-}
-
-.menu-item:hover .arrow,
-.menu-item:focus .arrow {
-  visibility: visible;
+  display: none;
 }
 
 .menu-item:hover,
 .menu-item:focus {
-  background: var(--c-white);
-  color: var(--c-bg);
+  transform: rotate(0deg) scale(1.03);
+  box-shadow: 3px 5px 12px rgba(74, 54, 40, 0.3);
   outline: none;
-}
-
-.menu-item:hover .label,
-.menu-item:focus .label {
-  color: var(--c-bg);
 }
 
 /* ---------- Popups ---------- */
@@ -297,7 +252,7 @@ body {
 .popup {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(74, 54, 40, 0.45);
   display: none;
   align-items: center;
   justify-content: center;
@@ -310,26 +265,41 @@ body {
 }
 
 .popup-content {
-  background: var(--c-bg);
-  border: 4px solid var(--c-white);
-  box-shadow: 0 0 0 4px var(--c-bg), 0 0 0 8px var(--c-white);
-  padding: 28px 24px;
+  background: var(--paper-alt);
+  border: 2px solid var(--paper-line);
+  border-radius: 4px 8px 5px 9px;
+  box-shadow: 3px 6px 16px rgba(74, 54, 40, 0.3);
+  padding: 30px 26px;
   max-width: 360px;
   width: 100%;
   position: relative;
   text-align: left;
+  transform: rotate(-0.4deg);
+}
+
+.popup-content::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 22px 22px 0;
+  border-color: transparent var(--paper) transparent transparent;
+  filter: drop-shadow(-1px 1px 1px rgba(74, 54, 40, 0.25));
 }
 
 .popup-label {
-  font-family: "Press Start 2P", monospace;
-  font-size: 0.9rem;
-  color: var(--c-yellow);
+  font-family: "Caveat", "Ma Shan Zheng", cursive;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--accent);
   margin-bottom: 12px;
-  letter-spacing: 1px;
 }
 
 .popup-text {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   margin-bottom: 14px;
   line-height: 1.4;
 }
@@ -338,18 +308,23 @@ body {
   position: absolute;
   top: 12px;
   right: 14px;
-  background: var(--c-bg);
-  border: 2px solid var(--c-white);
-  color: var(--c-white);
-  font-family: "Press Start 2P", monospace;
-  font-size: 0.75rem;
+  background: var(--paper);
+  border: 2px solid var(--ink-soft);
+  border-radius: 50%;
+  color: var(--ink);
+  font-family: "Caveat", cursive;
+  font-weight: 700;
+  font-size: 0.9rem;
   cursor: pointer;
-  padding: 6px 8px;
+  width: 26px;
+  height: 26px;
   line-height: 1;
 }
 
 .popup-close:hover {
-  background: var(--c-red);
+  background: var(--accent);
+  color: var(--paper);
+  border-color: var(--accent);
 }
 
 .wechat-id-row {
@@ -358,20 +333,22 @@ body {
 
 .wechat-id-row code {
   display: block;
-  background: var(--c-ink);
-  border: 2px solid var(--c-white);
+  background: var(--paper);
+  border: 2px dashed var(--paper-line);
+  border-radius: 4px;
   padding: 12px;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   text-align: center;
   letter-spacing: 1px;
-  color: var(--c-yellow);
+  color: var(--accent);
+  font-family: "Caveat", cursive;
 }
 
 .copy-feedback,
 .form-feedback {
   margin-top: 12px;
-  font-size: 1.1rem;
-  color: var(--c-yellow);
+  font-size: 1.2rem;
+  color: var(--accent);
   min-height: 1.4em;
 }
 
@@ -382,28 +359,30 @@ body {
 }
 
 #anonForm label {
-  font-family: "Press Start 2P", monospace;
-  font-size: 0.65rem;
+  font-family: "Caveat", "Ma Shan Zheng", cursive;
+  font-weight: 700;
+  font-size: 1.1rem;
   letter-spacing: 0.5px;
-  color: var(--c-white);
+  color: var(--ink-soft);
   margin-top: 10px;
 }
 
 #anonForm input,
 #anonForm textarea {
-  background: var(--c-ink);
-  color: var(--c-white);
-  border: 2px solid var(--c-white);
-  padding: 10px 12px;
-  font-size: 1.2rem;
-  font-family: "VT323", monospace;
+  background: transparent;
+  color: var(--ink);
+  border: none;
+  border-bottom: 2px dashed var(--paper-line);
+  padding: 8px 4px;
+  font-size: 1.3rem;
+  font-family: "Caveat", "Ma Shan Zheng", cursive;
   resize: vertical;
 }
 
 #anonForm input:focus,
 #anonForm textarea:focus {
   outline: none;
-  border-color: var(--c-yellow);
+  border-color: var(--accent);
 }
 
 #anonForm .menu-item {

@@ -107,7 +107,7 @@ function getAudioCtx() {
   return audioCtx;
 }
 
-function beep(freq = 600, duration = 0.04, type = "square", volume = 0.05) {
+function beep(freq = 600, duration = 0.05, type = "sine", volume = 0.035) {
   try {
     const ctx = getAudioCtx();
     const osc = ctx.createOscillator();
@@ -169,36 +169,18 @@ async function runIntro() {
   dialogueDone = true;
   langToggleBtn.disabled = false;
   musicChoice.classList.add("show");
-  beep(800, 0.08, "square", 0.06);
+  beep(700, 0.09, "sine", 0.05);
 }
 
-function explode() {
-  const flash = document.createElement("div");
-  flash.className = "explode-flash";
-  document.body.appendChild(flash);
-
-  const colors = ["#e4002b", "#f8d800", "#fcfcfc", "#0058f8", "#f8d8a8"];
-  for (let i = 0; i < 22; i++) {
-    const p = document.createElement("div");
-    p.className = "explode-px";
-    const angle = (i / 22) * 360;
-    const dist = 60 + Math.random() * 130;
-    const size = [8, 12, 16][Math.floor(Math.random() * 3)];
-    p.style.cssText = `--a:${angle}deg;--d:${dist}px;width:${size}px;height:${size}px;background:${colors[i % colors.length]}`;
-    document.body.appendChild(p);
-  }
-
-  setTimeout(() => {
-    const dark = document.createElement("div");
-    dark.className = "explode-dark";
-    document.body.appendChild(dark);
-  }, 700);
+function foldAway() {
+  langToggleBtn.style.visibility = "hidden";
+  document.querySelector(".stage").classList.add("fold-away");
 }
 
 musicYes.addEventListener("click", () => {
   musicChoice.classList.remove("show");
   contacts.classList.add("show");
-  beep(800, 0.08, "square", 0.06);
+  beep(700, 0.09, "sine", 0.05);
   bgMusic.volume = 0.4;
   bgMusic.play().catch(() => {});
 });
@@ -207,8 +189,8 @@ musicNo.addEventListener("click", async () => {
   musicChoice.classList.remove("show");
   langToggleBtn.disabled = true;
   await typeText(translations[lang].byebye);
-  await wait(1500);
-  explode();
+  await wait(1200);
+  foldAway();
 });
 
 document.addEventListener("DOMContentLoaded", () => {
