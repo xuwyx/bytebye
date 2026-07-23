@@ -251,9 +251,7 @@ const anonClose = document.getElementById("anonClose");
 const anonForm = document.getElementById("anonForm");
 const anonFeedback = document.getElementById("anonFeedback");
 
-// Create your own form at https://formspree.io (free tier), connect it to
-// your email, then replace YOUR_FORM_ID below with the ID it gives you.
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/maqrdvap";
 
 anonBtn.addEventListener("click", () => {
   anonPopup.classList.add("show");
