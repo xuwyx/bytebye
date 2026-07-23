@@ -65,7 +65,7 @@ const translations = {
   },
 };
 
-let lang = "zh";
+let lang = "en";
 let dialogueDone = false;
 
 const langToggleBtn = document.getElementById("langToggle");
@@ -161,13 +161,11 @@ function wait(ms) {
 
 async function runIntro() {
   await wait(500);
-  const lines = translations[lang].dialogueLines;
-  for (const line of lines) {
-    await typeText(line);
+  for (let i = 0; i < translations[lang].dialogueLines.length; i++) {
+    await typeText(translations[lang].dialogueLines[i]);
     await wait(1400);
   }
   dialogueDone = true;
-  langToggleBtn.disabled = false;
   musicChoice.classList.add("show");
   beep(700, 0.09, "sine", 0.05);
 }
