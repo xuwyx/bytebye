@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>bytebye</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="crt"></div>
+
+  <button class="lang-toggle" id="langToggle" type="button" data-sound disabled aria-label="Switch language">EN</button>
+
+  <main class="stage">
+
+    <!-- Pixel sprite -->
+    <div class="sprite-wrap">
+      <svg class="sprite" viewBox="0 0 14 14" shape-rendering="crispEdges" aria-hidden="true">
+        <!-- hair -->
+        <rect x="4" y="1" width="6" height="2" class="px-hair"/>
+        <!-- face -->
+        <rect x="4" y="3" width="6" height="4" class="px-skin"/>
+        <rect x="5" y="4" width="1" height="1" class="px-ink"/>
+        <rect x="8" y="4" width="1" height="1" class="px-ink"/>
+        <rect x="6" y="6" width="2" height="1" class="px-ink"/>
+        <!-- body -->
+        <rect x="3" y="7" width="8" height="5" class="px-blue"/>
+        <!-- left arm -->
+        <rect x="2" y="8" width="1" height="4" class="px-skin"/>
+        <!-- legs -->
+        <rect x="4" y="12" width="3" height="2" class="px-pants"/>
+        <rect x="7" y="12" width="3" height="2" class="px-pants"/>
+        <!-- waving arm: frame A (down) -->
+        <g class="arm-frame arm-a">
+          <rect x="11" y="8" width="1" height="4" class="px-skin"/>
+        </g>
+        <!-- waving arm: frame B (up) -->
+        <g class="arm-frame arm-b">
+          <rect x="11" y="5" width="1" height="3" class="px-skin"/>
+          <rect x="12" y="3" width="1" height="2" class="px-skin"/>
+          <rect x="13" y="2" width="1" height="1" class="px-white"/>
+          <rect x="13" y="4" width="1" height="1" class="px-white"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- RPG-style dialogue box -->
+    <div class="dialogue-box" id="dialogueBox">
+      <p id="dialogueText"></p><span class="cursor">&#9608;</span>
+    </div>
+
+    <!-- Music choice -->
+    <section class="menu" id="musicChoice">
+      <div class="choice-row">
+        <button class="menu-item" id="musicYes" type="button" data-sound>
+          <span class="arrow">&#9654;</span>
+          <span class="label" data-i18n="yes">YES!</span>
+        </button>
+        <button class="menu-item" id="musicNo" type="button" data-sound>
+          <span class="arrow">&#9654;</span>
+          <span class="label" data-i18n="no">NO!</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Contact menu -->
+    <section class="menu" id="contacts">
+      <h2 class="menu-title" data-i18n="connectTitle">CONNECT WITH ME</h2>
+
+      <a class="menu-item" href="https://wa.me/6583677961" target="_blank" rel="noopener" data-sound>
+        <span class="arrow">&#9654;</span>
+        <span class="label" data-i18n="whatsapp">WHATSAPP</span>
+      </a>
+
+      <button class="menu-item" id="wechatBtn" type="button" data-sound>
+        <span class="arrow">&#9654;</span>
+        <span class="label" data-i18n="wechat">WECHAT</span>
+      </button>
+
+      <a class="menu-item" href="https://instagram.com/weiya.xu.3726" target="_blank" rel="noopener" data-sound>
+        <span class="arrow">&#9654;</span>
+        <span class="label" data-i18n="instagram">INSTAGRAM</span>
+      </a>
+
+      <button class="menu-item" id="anonBtn" type="button" data-sound>
+        <span class="arrow">&#9654;</span>
+        <span class="label" data-i18n="anon">ANONYMOUS MESSAGE</span>
+      </button>
+    </section>
+
+  </main>
+
+  <!-- WeChat popup -->
+  <div class="popup" id="wechatPopup">
+    <div class="popup-content">
+      <button class="popup-close" id="wechatClose" aria-label="Close">X</button>
+      <p class="popup-label" data-i18n="wechatPopupLabel">MY WECHAT ID</p>
+      <div class="wechat-id-row">
+        <code id="wechatId">xuwyx97</code>
+      </div>
+      <button id="wechatCopy" class="menu-item" type="button" data-sound>
+        <span class="arrow">&#9654;</span>
+        <span class="label" data-i18n="copy">COPY</span>
+      </button>
+      <p class="copy-feedback" id="wechatCopyFeedback"></p>
+    </div>
+  </div>
+
+  <!-- Anonymous message popup -->
+  <div class="popup" id="anonPopup">
+    <div class="popup-content">
+      <button class="popup-close" id="anonClose" aria-label="Close">X</button>
+      <h3 class="popup-label" data-i18n="anonTitle">ANONYMOUS MESSAGE</h3>
+      <p class="popup-text" data-i18n="anonDesc">Say anything — I won't know it's you unless you tell me.</p>
+      <form id="anonForm">
+        <input type="hidden" name="_subject" value="New anonymous message on bytebye" />
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+        <label for="anonName" data-i18n="anonNameLabel">YOUR NAME (OPTIONAL)</label>
+        <input type="text" id="anonName" name="name" data-i18n-placeholder="anonNamePlaceholder" placeholder="Leave blank to stay anonymous" />
+
+        <label for="anonMessage" data-i18n="anonMsgLabel">YOUR MESSAGE</label>
+        <textarea id="anonMessage" name="message" rows="4" required data-i18n-placeholder="anonMsgPlaceholder" placeholder="Write something..."></textarea>
+
+        <button type="submit" class="menu-item" data-sound>
+          <span class="arrow">&#9654;</span>
+          <span class="label" data-i18n="send">SEND</span>
+        </button>
+      </form>
+      <p class="form-feedback" id="anonFeedback"></p>
+    </div>
+  </div>
+
+  <audio id="bgMusic" src="assets/end_of_beginning.mp3" loop></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
