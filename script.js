@@ -211,7 +211,10 @@ musicNo.addEventListener("click", async () => {
   explode();
 });
 
-document.addEventListener("DOMContentLoaded", runIntro);
+document.addEventListener("DOMContentLoaded", () => {
+  applyLanguage(lang);
+  runIntro();
+});
 
 // ---------- WeChat popup ----------
 
