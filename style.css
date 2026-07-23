@@ -91,7 +91,7 @@ body {
   pointer-events: none;
 }
 
-/* ---------- Running horse doodle ---------- */
+/* ---------- Running horse photo ---------- */
 
 .doodle-wrap {
   display: flex;
@@ -100,8 +100,11 @@ body {
 
 .doodle {
   width: 150px;
-  height: auto;
-  filter: drop-shadow(2px 6px 6px rgba(74, 54, 40, 0.25));
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid var(--paper-alt);
+  box-shadow: 0 0 0 2px var(--ink-soft), 3px 6px 14px rgba(74, 54, 40, 0.3);
+  transform: rotate(-3deg);
 }
 
 /* ---------- Dialogue box ---------- */
