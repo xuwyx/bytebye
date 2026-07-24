@@ -104,10 +104,11 @@ body {
 .doodle {
   width: 150px;
   height: 150px;
+  object-fit: cover;
   border-radius: 50%;
   border: 5px solid var(--paper-alt);
   box-shadow: 0 0 0 2px var(--ink-soft), 3px 6px 14px rgba(74, 54, 40, 0.3);
-  transform: rotate(-3deg);
+  transform: rotate(-3deg) scale(1.1) translateY(-3px);
 }
 
 .goodbye-doodle {

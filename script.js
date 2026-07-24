@@ -194,6 +194,7 @@ function foldAway() {
 
 musicYes.addEventListener("click", () => {
   musicChoice.classList.remove("show");
+  setTimeout(() => { musicChoice.style.display = "none"; }, 400);
   contacts.classList.add("show");
   beep(700, 0.09, "sine", 0.05);
   bgMusic.volume = 0.4;
