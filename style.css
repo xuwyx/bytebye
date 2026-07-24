@@ -113,8 +113,8 @@ body {
 
 .doodle-img {
   display: block;
-  width: 132%;
-  height: 132%;
+  width: 105%;
+  height: 105%;
   object-fit: cover;
   transform: translateY(-9%);
 }
