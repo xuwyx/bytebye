@@ -141,6 +141,9 @@ const musicChoice = document.getElementById("musicChoice");
 const musicYes = document.getElementById("musicYes");
 const musicNo = document.getElementById("musicNo");
 const bgMusic = document.getElementById("bgMusic");
+const horseDoodle = document.getElementById("horseDoodle");
+const goodbyeDoodle = document.getElementById("goodbyeDoodle");
+const goodbyeMusic = document.getElementById("goodbyeMusic");
 
 let introToken = 0;
 
@@ -200,8 +203,12 @@ musicYes.addEventListener("click", () => {
 musicNo.addEventListener("click", async () => {
   musicChoice.classList.remove("show");
   langToggleBtn.disabled = true;
+  horseDoodle.hidden = true;
+  goodbyeDoodle.hidden = false;
+  goodbyeMusic.currentTime = 0;
+  goodbyeMusic.play().catch(() => {});
   await typeText(translations[lang].byebye);
-  await wait(1200);
+  await wait(2200);
   foldAway();
 });
 

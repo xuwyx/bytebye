@@ -110,6 +110,13 @@ body {
   transform: rotate(-3deg);
 }
 
+.goodbye-doodle {
+  width: 190px;
+  height: auto;
+  border-radius: 10px;
+  transform: rotate(2deg);
+}
+
 /* ---------- Dialogue box ---------- */
 
 .dialogue-box {
