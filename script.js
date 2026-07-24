@@ -91,6 +91,9 @@ function applyLanguage(l) {
 
 langToggleBtn.addEventListener("click", () => {
   applyLanguage(lang === "zh" ? "en" : "zh");
+  if (!dialogueDone) {
+    runIntro(true);
+  }
 });
 
 // ---------- 8-bit sound effects (generated, no audio files) ----------
@@ -139,11 +142,18 @@ const musicYes = document.getElementById("musicYes");
 const musicNo = document.getElementById("musicNo");
 const bgMusic = document.getElementById("bgMusic");
 
-function typeText(text, speed = 60) {
+let introToken = 0;
+
+function typeText(text, speed = 60, myToken = introToken) {
   return new Promise((resolve) => {
     dialogueText.textContent = "";
     let i = 0;
     const interval = setInterval(() => {
+      if (myToken !== introToken) {
+        clearInterval(interval);
+        resolve();
+        return;
+      }
       dialogueText.textContent += text[i];
       beep(500 + Math.random() * 100, 0.03);
       i++;
@@ -159,12 +169,16 @@ function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function runIntro() {
-  await wait(500);
+async function runIntro(skipInitialDelay = false) {
+  const myToken = ++introToken;
+  if (!skipInitialDelay) await wait(500);
   for (let i = 0; i < translations[lang].dialogueLines.length; i++) {
-    await typeText(translations[lang].dialogueLines[i]);
+    if (myToken !== introToken) return;
+    await typeText(translations[lang].dialogueLines[i], 60, myToken);
+    if (myToken !== introToken) return;
     await wait(1400);
   }
+  if (myToken !== introToken) return;
   dialogueDone = true;
   musicChoice.classList.add("show");
   beep(700, 0.09, "sine", 0.05);
