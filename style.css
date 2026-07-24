@@ -101,14 +101,22 @@ body {
   justify-content: center;
 }
 
-.doodle {
+.doodle-frame {
   width: 150px;
   height: 150px;
-  object-fit: cover;
+  overflow: hidden;
   border-radius: 50%;
   border: 5px solid var(--paper-alt);
   box-shadow: 0 0 0 2px var(--ink-soft), 3px 6px 14px rgba(74, 54, 40, 0.3);
-  transform: rotate(-3deg) scale(1.1) translateY(-3px);
+  transform: rotate(-3deg);
+}
+
+.doodle-img {
+  display: block;
+  width: 132%;
+  height: 132%;
+  object-fit: cover;
+  transform: translateY(-9%);
 }
 
 .goodbye-doodle {
